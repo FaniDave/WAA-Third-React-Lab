@@ -1,10 +1,13 @@
-import './App.css';
-import { Dashboard } from './Components/Dashboard';
+import "./App.css";
+import { Dashboard } from "./Components/Dashboard";
+import { SelectedPostProvider } from "./Components/SelectedPostContext";
 
 function App() {
   return (
     <div className="App">
-      <Dashboard />
+      <SelectedPostProvider>
+        <Dashboard />
+      </SelectedPostProvider>
     </div>
   );
 }

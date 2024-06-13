@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Posts } from "./Posts";
 import { PostDetails } from "./PostDetails";
 import { AddPost } from "./AddPost";
 import axios from "axios";
+import { SelectedPostContext } from "./SelectedPostContext";
 
 export const Dashboard = () => {
   const customStyleHeader = {
@@ -35,7 +36,7 @@ export const Dashboard = () => {
 
   const [postInfo, setPostInfo] = useState([]);
   const [inputValue, setInputValue] = useState("");
-  const [selectedPostId, setSelectedPostId] = useState(null);
+  const { selectedPostId, setSelectedPostId } = useContext(SelectedPostContext);
 
   useEffect(() => {
     axios

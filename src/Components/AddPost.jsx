@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import axios from "axios";
 
 export const AddPost = ({ onAdd }) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [content, setContent] = useState("");
+  const titleRef = useRef();
+  const authorRef = useRef();
+  const contentRef = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const title = titleRef.current.value;
+    const author = authorRef.current.value;
+    const content = contentRef.current.value;
+
     axios
       .post("http://localhost:8080/posts", { title, author, content })
       .then((response) => {
         onAdd(response.data);
-        setTitle("");
-        setAuthor("");
-        setContent("");
+        titleRef.current.value = "";
+        authorRef.current.value = "";
+        contentRef.current.value = "";
       })
       .catch((error) => {
         console.error("There was an error adding the post!", error);
@@ -34,8 +38,7 @@ export const AddPost = ({ onAdd }) => {
     >
       <input
         type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        ref={titleRef}
         placeholder="Title"
         required
         style={{
@@ -49,8 +52,7 @@ export const AddPost = ({ onAdd }) => {
       />
       <input
         type="text"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
+        ref={authorRef}
         placeholder="Author"
         required
         style={{
@@ -63,8 +65,7 @@ export const AddPost = ({ onAdd }) => {
         }}
       />
       <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
+        ref={contentRef}
         placeholder="Content"
         required
         style={{
